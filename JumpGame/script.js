@@ -57,6 +57,18 @@ const arrayBackground = [
   "./images/bg10.png",
 ];
 
+// Load sound effects
+const jumpSound = new Audio('./audio/cartoon-jump.mp3'); 
+const crashSound = new Audio('./audio/distress-signal.mp3'); 
+
+function playJumpSound() {
+  jumpSound.play();
+}
+
+function playCrashSound() {
+  crashSound.play();
+}
+
 const jump = () => {
   if (isJumping) {
     return;
@@ -71,6 +83,7 @@ const jump = () => {
         }
         characterBottom -= 10;
         character.style.bottom = characterBottom + "px";
+        playJumpSound();
       }, 20);
     }
     characterBottom += 10;
@@ -92,7 +105,7 @@ const generateObstacles = () => {
 
   let randomTimeout = Math.floor(Math.random() * 1000) + 1000;
   let obstacleRight = -30;
-  let obstacleBottom = 100;
+  let obstacleBottom = 50; // lowered
   let obstacleWidth = Math.floor(Math.random() * (50 - 10 + 1) + 10);
   let obstacleHeight = Math.floor(Math.random() * 50) + 50;
   obstacle.style.backgroundImage = `url(${
@@ -111,7 +124,9 @@ const generateObstacles = () => {
       characterRight <= obstacleRight + obstacleWidth &&
       characterBottom <= obstacleBottom + obstacleHeight
     ) {
-      alert("Game over! Your score is: " + score);
+      playCrashSound();
+      alert(`Crash Landing!\nYou've hit an obstacle, but the galaxy isn’t conquered in one try. 
+Will you leap again to finish the mission?\n\nFinal Score: ` + score);
       clearInterval(obstacleInterval);
       clearTimeout(obstacleTimeout);
       location.reload();
@@ -135,7 +150,9 @@ const game = () => {
   character.style.backgroundImage = `url(${
     arrayCharacters[Math.floor(Math.random() * 5)]
   })`;
-  alert("Welcome to the jump game!");
+  alert(`Welcome to Cosmic Leap!\n\nEmbark on a cosmic journey through distant galaxies. 
+With each jump, you're closer to bringing back the light to the universe. 
+Gear up, the stars are waiting for you!`);
   setInterval(showScore, 100);
   generateObstacles();
 };
