@@ -3,12 +3,16 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Orbitron', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #f4f4f4;
+
 }
 
 .calculator {
@@ -24,7 +28,7 @@ body {
 
 .display {
   grid-column: span 4;
-  background-color: black;
+  background-color: rgba(110, 108, 108, 0.397);
   color: white;
   font-size: 2em;
   padding: 10px;
@@ -45,7 +49,7 @@ button {
 }
 
 button:hover {
-  background-color: #555;
+  background-color: #575454;
 }
 
 button:active {
@@ -53,11 +57,11 @@ button:active {
 }
 
 .operator {
-  background-color: #ff9500;
+  background-color: #1c9fc7;
 }
 
 .operator:hover {
-  background-color: #ffa733;
+  background-color: #4a92af;
 }
 
 .equals {
