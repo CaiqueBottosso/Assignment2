@@ -20,7 +20,9 @@ let isJumping = false;
 let upTime;
 let downTime;
 let displayScore = document.getElementById("score");
+let displayScoreObstacles = document.getElementById("scoreObstacles");
 let score = 0;
+let scoreObstacles = 0;
 
 const arrayObstacles = [
   "./images/p-air.png",
@@ -58,8 +60,8 @@ const arrayBackground = [
 ];
 
 // Load sound effects
-const jumpSound = new Audio('./audio/cartoon-jump.mp3'); 
-const crashSound = new Audio('./audio/distress-signal.mp3'); 
+const jumpSound = new Audio("./audio/cartoon-jump.mp3");
+const crashSound = new Audio("./audio/distress-signal.mp3");
 
 function playJumpSound() {
   jumpSound.play();
@@ -97,6 +99,11 @@ const showScore = () => {
   displayScore.innerText = score;
 };
 
+const showScoreObstacles = () => {
+  scoreObstacles++;
+  displayScoreObstacles.innerText = scoreObstacles;
+};
+
 const generateObstacles = () => {
   let obstacles = document.querySelector(".obstacles");
   let obstacle = document.createElement("div");
@@ -119,14 +126,20 @@ const generateObstacles = () => {
     obstacle.style.bottom = obstacleBottom + "px";
     obstacle.style.width = obstacleWidth + "px";
     obstacle.style.height = obstacleHeight + "px";
+    if (characterRight == obstacleRight - characterWidth - 10) {
+      showScoreObstacles();
+    }
     if (
       characterRight >= obstacleRight - characterWidth &&
       characterRight <= obstacleRight + obstacleWidth &&
       characterBottom <= obstacleBottom + obstacleHeight
     ) {
       playCrashSound();
-      alert(`Crash Landing!\nYou've hit an obstacle, but the galaxy isn’t conquered in one try. 
-Will you leap again to finish the mission?\n\nFinal Score: ` + score);
+      alert(
+        `Crash Landing!\nYou've hit an obstacle, but the galaxy isn’t conquered in one try. 
+Will you leap again to finish the mission?\n\nFinal Score: ` +
+          score * scoreObstacles
+      );
       clearInterval(obstacleInterval);
       clearTimeout(obstacleTimeout);
       location.reload();
