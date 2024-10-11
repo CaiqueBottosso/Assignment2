@@ -5,6 +5,8 @@ let currentOperator = null;
 let waitingForSecondNumber = false;
 
 const display = document.getElementById("display");
+const modeToggleBtn = document.getElementById('modeToggle');
+const body = document.body;
 
 // display update
 function updateDisplay() {
@@ -123,3 +125,13 @@ function divide(a, b) {
   }
   return a / b;
 }
+
+// light mode
+modeToggleBtn.addEventListener('click', () => {
+  body.classList.toggle('light-mode');
+  if (body.classList.contains('light-mode')) {
+    modeToggleBtn.textContent = '🌙'; 
+  } else {
+    modeToggleBtn.textContent = '☀️'; 
+  }
+});

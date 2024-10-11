@@ -61,7 +61,8 @@ const arrayBackground = [
 
 // Load sound effects
 const jumpSound = new Audio("./audio/cartoon-jump.mp3");
-const crashSound = new Audio("./audio/distress-signal.mp3");
+const crashSound = new Audio("./audio/arcade-explosion.wav");
+const bgm = new Audio('./audio/space-bgm.mp3');
 
 function playJumpSound() {
   jumpSound.play();
@@ -69,6 +70,18 @@ function playJumpSound() {
 
 function playCrashSound() {
   crashSound.play();
+}
+
+bgm.loop = true;
+// bgm.volume = 0.5;
+
+function startBGM() {
+  bgm.play();
+}
+
+function stopBGM() {
+  bgm.pause();
+  bgm.currentTime = 0; // Reset the music to the start
 }
 
 const jump = () => {
@@ -134,6 +147,7 @@ const generateObstacles = () => {
       characterRight <= obstacleRight + obstacleWidth &&
       characterBottom <= obstacleBottom + obstacleHeight
     ) {
+      stopBGM();
       playCrashSound();
       alert(
         `Crash Landing!\nYou've hit an obstacle, but the galaxy isn’t conquered in one try. 
@@ -168,6 +182,7 @@ With each jump, you're closer to bringing back the light to the universe.
 Gear up, the stars are waiting for you!`);
   setInterval(showScore, 100);
   generateObstacles();
+  startBGM()
 };
 
 game();
