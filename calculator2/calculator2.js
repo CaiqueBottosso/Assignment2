@@ -5,7 +5,7 @@ let currentOperator = null;
 let waitingForSecondNumber = false;
 
 const display = document.getElementById("display");
-const modeToggleBtn = document.getElementById('modeToggle');
+const modeToggleBtn = document.getElementById("modeToggle");
 const body = document.body;
 
 // display update
@@ -56,7 +56,7 @@ function handleOperator(operator) {
     } else if (currentOperator) {
       secondNumber = parseFloat(displayValue);
       const result = operate(currentOperator, firstNumber, secondNumber);
-      displayValue = String(result);
+      ddisplayValue = String(result.toFixed(6));
       firstNumber = result;
     }
     waitingForSecondNumber = true;
@@ -71,7 +71,7 @@ function handleEquals() {
   }
   secondNumber = parseFloat(displayValue);
   const result = operate(currentOperator, firstNumber, secondNumber);
-  displayValue = String(result);
+  displayValue = String(result.toFixed(6));
   firstNumber = null;
   currentOperator = null;
   waitingForSecondNumber = false;
@@ -127,11 +127,11 @@ function divide(a, b) {
 }
 
 // light mode
-modeToggleBtn.addEventListener('click', () => {
-  body.classList.toggle('light-mode');
-  if (body.classList.contains('light-mode')) {
-    modeToggleBtn.textContent = '🌙'; 
+modeToggleBtn.addEventListener("click", () => {
+  body.classList.toggle("light-mode");
+  if (body.classList.contains("light-mode")) {
+    modeToggleBtn.textContent = "🌙";
   } else {
-    modeToggleBtn.textContent = '☀️'; 
+    modeToggleBtn.textContent = "☀️";
   }
 });
