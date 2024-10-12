@@ -10,6 +10,9 @@ const body = document.body;
 
 // display update
 function updateDisplay() {
+  if (displayValue.length > 10) {
+    displayValue = displayValue.slice(0, 10);
+  }
   display.textContent = displayValue;
 }
 
