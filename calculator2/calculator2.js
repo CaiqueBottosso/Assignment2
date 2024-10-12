@@ -35,6 +35,26 @@ document.querySelectorAll(".calculator button").forEach((button) => {
   });
 });
 
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+
+  if (!isNaN(key)) {
+    handleNumber(key);
+  } else if (key === ".") {
+    handleDecimal();
+  } else if (key === "Backspace") {
+    event.preventDefault(); // Prevent default backspace behavior
+    backspace();
+  } else if (key === "Enter" || key === "=") {
+    event.preventDefault(); // Prevent form submission
+    handleEquals();
+  } else if (key === "Escape" || key === "c") {
+    clearCalculator();
+  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+    handleOperator(key);
+  }
+});
+
 function handleNumber(number) {
   if (waitingForSecondNumber) {
     displayValue = number;
@@ -59,7 +79,7 @@ function handleOperator(operator) {
     } else if (currentOperator) {
       secondNumber = parseFloat(displayValue);
       const result = operate(currentOperator, firstNumber, secondNumber);
-      ddisplayValue = String(result.toFixed(6));
+      displayValue = formatResult(result);
       firstNumber = result;
     }
     waitingForSecondNumber = true;
@@ -74,11 +94,25 @@ function handleEquals() {
   }
   secondNumber = parseFloat(displayValue);
   const result = operate(currentOperator, firstNumber, secondNumber);
-  displayValue = String(result.toFixed(6));
+  displayValue = formatResult(result);
   firstNumber = null;
   currentOperator = null;
   waitingForSecondNumber = false;
   updateDisplay();
+}
+
+function formatResult(result) {
+  // Check if result is a number
+  if (typeof result === "number") {
+    // Limit the result to 12 significant digits and remove unnecessary trailing zeros
+    if (Number.isInteger(result)) {
+      return result.toString(); // For integers, show without decimals
+    } else {
+      return parseFloat(result.toPrecision(12)).toString(); // For non-integers, round appropriately
+    }
+  } else {
+    return result; // If result is not a number (e.g., an error message), return as-is
+  }
 }
 
 function clearCalculator() {
@@ -124,7 +158,7 @@ function multiply(a, b) {
 
 function divide(a, b) {
   if (b === 0) {
-    return "Error!";
+    return "no % by 0!";
   }
   return a / b;
 }
